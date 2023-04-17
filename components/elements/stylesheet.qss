@@ -1,0 +1,22 @@
+* {
+
+}
+
+QPushButton {
+    color: white;
+    background-color: #f02416;
+    border: 0px;
+}
+
+QPushButton:hover {
+    background-color: #ed493e;
+}
+
+QPushButton#btn_downloads {
+    border-radius: 15px;
+    border: 1px solid black;
+}
+
+QFrame#frame_navigation {
+    background-color: #f02416;
+}
