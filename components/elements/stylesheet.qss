@@ -12,6 +12,10 @@ QPushButton:hover {
     background-color: #ed493e;
 }
 
+QPushButton:disabled {
+    background-color: #752f2a;
+}
+
 QPushButton#btn_downloads {
     border-radius: 15px;
     border: 1px solid black;
