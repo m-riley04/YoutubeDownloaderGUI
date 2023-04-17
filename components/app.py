@@ -1,9 +1,13 @@
 from .helpers import open_path
+from .youtubedownloader import YoutubeDownloader
 import os
 
 class App:
     def __init__(self):
-        pass
+        self.downloader = YoutubeDownloader()
+    
+    def set_extension(self, extension):
+        
     
     def open_folder(self, folder=""):
         open_path(fr"{os.getcwd()}\{folder}")
