@@ -48,7 +48,22 @@ class Window(QMainWindow):
         self.image_logo.setPixmap(self._appLogo)
         
     def _initialize_pages(self):
+        # Set First Pages
         self.stack_pages.setCurrentWidget(self.page_home)
+        
+        # Set Sub-Pages
+        self.stack_subpages.setCurrentWidget(self.subpage_logo)
+    
+    def _reset_page_forms(self, page):
+        '''Clears the page's entry forms and lists'''
+        children = [page.findChildren(QLineEdit), page.findChildren(QListWidget), page.findChildren(QTextEdit)]
+        
+        for widget in children:
+            for child in widget:
+                try:
+                    child.clear()
+                except:
+                    pass
     
     #-- Widget Commands
     def click_home(self):
