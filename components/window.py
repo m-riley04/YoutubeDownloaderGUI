@@ -65,7 +65,13 @@ class Window(QMainWindow):
                 except:
                     pass
     
-    #-- Widget Commands
+    
+    '''
+    =======================
+        Widget Commands
+    =======================
+    '''
+    #-- Buttons
     def click_home(self):
         self.stack_pages.setCurrentWidget(self.page_home)
     
@@ -87,3 +93,6 @@ class Window(QMainWindow):
     
     def click_media(self):
         self.app.open_folder(folder="media")
+        
+    def click_video(self):
+        pass
