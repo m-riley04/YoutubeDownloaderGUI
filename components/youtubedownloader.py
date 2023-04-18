@@ -1,17 +1,102 @@
 import pytube as pt
-from sys import exit
 
 class YoutubeDownloader:
     def __init__(self):
+        self._youtube           = None
+        self._url               = None
         self._filtersEnabled    = False
         self._splitChannels     = False
         self._onlyOne           = False
         self._chosenType        = False
-        self._extension         = ""
+        self._extension         = None
+        self._format            = None
         self._streams           = None
         self._downloads         = []
-        self._youtube           = None
-
+        
+    def set_video(self, url):
+        '''Sets the video to search for'''
+        try:
+            self._url = url
+            self._youtube = pt.YouTube(url=url)
+        except:
+            raise ValueError("Invalid URL.")
+        
+    def set_extension(self, extension:str):
+        '''Sets the filtered extension'''
+        self._extension = extension
+        
+    def set_format(self, format):
+        '''Sets the filtered format'''
+        self._format = format
+        
+    def set_splitChannels(self, splitChannels:bool):
+        '''Sets the filtered channel'''
+        self._splitChannels = splitChannels
+        
+    def get_url(self):
+        return self._url
+        
+    def get_thumbnail_url(self):
+        if self._youtube == None:
+            raise ValueError("Video not set.")
+        return self._youtube.thumbnail_url
+    
+    def get_title(self):
+        if self._youtube == None:
+            raise ValueError("Video not set.")
+        return self._youtube.title
+    
+    def get_description(self):
+        if self._youtube == None:
+            raise ValueError("Video not set.")
+        return self._youtube.description
+    
+    def get_channel(self):
+        if self._youtube == None:
+            raise ValueError("Video not set.")
+        return self._youtube.author
+    
+    def get_channel_url(self):
+        if self._youtube == None:
+            raise ValueError("Video not set.")
+        return self._youtube.channel_url
+    
+    def get_duration(self) -> int:
+        if self._youtube == None:
+            raise ValueError("Video not set.")
+        return self._youtube.length
+    
+    def get_publish_date(self):
+        if self._youtube == None:
+            raise ValueError("Video not set.")
+        return self._youtube.publish_date
+    
+    def get_rating(self):
+        if self._youtube == None:
+            raise ValueError("Video not set.")
+        return self._youtube.rating
+    
+    def get_views(self):
+        if self._youtube == None:
+            raise ValueError("Video not set.")
+        return self._youtube.views
+    
+    def get_keywords(self):
+        if self._youtube == None:
+            raise ValueError("Video not set.")
+        return self._youtube.keywords
+    
+    def get_avaliability(self):
+        try:
+            return self._youtube.check_availability()
+        except:
+            pass
+    
+    def get_info(self):
+        if self._youtube == None:
+            raise ValueError("Video not set.")
+        return self._youtube.vid_info
+    
     def initialize_yt(self, url):
         '''Attempts to create the Youtube object with the passed URL. If it URL is not valid, it raises a ValueError. Otherwise, it returns the Youtube object.'''
         try:

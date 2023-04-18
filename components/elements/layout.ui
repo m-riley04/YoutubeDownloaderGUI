@@ -71,7 +71,7 @@
         <rect>
          <x>10</x>
          <y>50</y>
-         <width>521</width>
+         <width>541</width>
          <height>41</height>
         </rect>
        </property>
@@ -96,14 +96,14 @@
       <widget class="QPushButton" name="btn_go">
        <property name="geometry">
         <rect>
-         <x>540</x>
+         <x>560</x>
          <y>50</y>
-         <width>81</width>
+         <width>61</width>
          <height>41</height>
         </rect>
        </property>
        <property name="text">
-        <string>Go</string>
+        <string/>
        </property>
       </widget>
      </widget>
@@ -265,358 +265,155 @@
           </rect>
          </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Your Selected Video:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Video Preview:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </widget>
-       <widget class="QLabel" name="label_videoChannel">
+       <widget class="QFrame" name="frame_video">
         <property name="geometry">
          <rect>
-          <x>440</x>
-          <y>190</y>
-          <width>361</width>
-          <height>31</height>
+          <x>0</x>
+          <y>0</y>
+          <width>851</width>
+          <height>431</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <widget class="QLabel" name="label_videoTitle">
+         <property name="geometry">
+          <rect>
+           <x>440</x>
+           <y>140</y>
+           <width>361</width>
+           <height>61</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;Title&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_videoChannel">
+         <property name="geometry">
+          <rect>
+           <x>440</x>
+           <y>190</y>
+           <width>361</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Channel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="image_videoThumbnail">
+         <property name="geometry">
+          <rect>
+           <x>50</x>
+           <y>140</y>
+           <width>351</width>
+           <height>211</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color : gray</string>
+         </property>
+         <property name="lineWidth">
+          <number>1</number>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_videoDuration">
+         <property name="geometry">
+          <rect>
+           <x>440</x>
+           <y>310</y>
+           <width>361</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Duration&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </widget>
+       <zorder>frame_video</zorder>
+       <zorder>frame_videoHeading</zorder>
+      </widget>
+      <widget class="QWidget" name="subpage_error">
+       <widget class="QLabel" name="label_error">
+        <property name="geometry">
+         <rect>
+          <x>160</x>
+          <y>120</y>
+          <width>531</width>
+          <height>231</height>
          </rect>
         </property>
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Channel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:26pt; font-weight:700;&quot;&gt;Unable to show preview.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
-       <widget class="QLabel" name="image_videoThumbnail">
+       <widget class="QFrame" name="frame_errorHeading">
         <property name="geometry">
          <rect>
-          <x>50</x>
-          <y>140</y>
-          <width>321</width>
-          <height>171</height>
-         </rect>
-        </property>
-        <property name="lineWidth">
-         <number>1</number>
-        </property>
-        <property name="text">
-         <string>image_thumbnail</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_videoTimestamp">
-        <property name="geometry">
-         <rect>
-          <x>440</x>
-          <y>270</y>
-          <width>361</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Timestamp&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_videoTitle">
-        <property name="geometry">
-         <rect>
-          <x>440</x>
-          <y>140</y>
-          <width>361</width>
+          <x>0</x>
+          <y>0</y>
+          <width>851</width>
           <height>61</height>
          </rect>
         </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;Title&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
         </property>
-        <property name="wordWrap">
-         <bool>true</bool>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
         </property>
+        <widget class="QLabel" name="label_errorHeading">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>10</y>
+           <width>241</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Video Preview:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
        </widget>
-      </widget>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="page_filters">
-     <widget class="QFrame" name="frame_2">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-      <property name="geometry">
-       <rect>
-        <x>210</x>
-        <y>440</y>
-        <width>631</width>
-        <height>111</height>
-       </rect>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <widget class="QLabel" name="label_3">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>171</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Insert a YouTube URL:</string>
-       </property>
-       <property name="scaledContents">
-        <bool>false</bool>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="entry_url_filters">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>50</y>
-         <width>521</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="toolTip">
-        <string>Insert a Youtube URL here</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="placeholderText">
-        <string>https://www.youtube.com/watch?v=dQw4w9WgXcQ</string>
-       </property>
-       <property name="clearButtonEnabled">
-        <bool>false</bool>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="btn_go_filters">
-       <property name="geometry">
-        <rect>
-         <x>540</x>
-         <y>50</y>
-         <width>81</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Go</string>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QFrame" name="frame_video">
-      <property name="geometry">
-       <rect>
-        <x>90</x>
-        <y>30</y>
-        <width>871</width>
-        <height>391</height>
-       </rect>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <widget class="QLabel" name="image_videoThumbnail_1">
-       <property name="geometry">
-        <rect>
-         <x>50</x>
-         <y>140</y>
-         <width>321</width>
-         <height>171</height>
-        </rect>
-       </property>
-       <property name="lineWidth">
-        <number>1</number>
-       </property>
-       <property name="text">
-        <string>image_thumbnail</string>
-       </property>
-      </widget>
-      <widget class="QFrame" name="frame_videoHeading_1">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>871</width>
-         <height>61</height>
-        </rect>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <widget class="QLabel" name="label_videoHeading_1">
+       <widget class="QFrame" name="frame_error">
         <property name="geometry">
          <rect>
-          <x>20</x>
-          <y>10</y>
-          <width>241</width>
-          <height>41</height>
+          <x>0</x>
+          <y>0</y>
+          <width>851</width>
+          <height>431</height>
          </rect>
         </property>
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Your Selected Video:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
         </property>
        </widget>
-      </widget>
-      <widget class="QLabel" name="label_videoTitle_1">
-       <property name="geometry">
-        <rect>
-         <x>440</x>
-         <y>140</y>
-         <width>361</width>
-         <height>61</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;Title&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="wordWrap">
-        <bool>true</bool>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_videoChannel_1">
-       <property name="geometry">
-        <rect>
-         <x>440</x>
-         <y>190</y>
-         <width>361</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Channel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_videoTimestamp_1">
-       <property name="geometry">
-        <rect>
-         <x>440</x>
-         <y>270</y>
-         <width>361</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Timestamp&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QGroupBox" name="group_filters_1">
-      <property name="geometry">
-       <rect>
-        <x>370</x>
-        <y>560</y>
-        <width>311</width>
-        <height>161</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>Filters</string>
-      </property>
-      <widget class="QLabel" name="label_format_1">
-       <property name="geometry">
-        <rect>
-         <x>50</x>
-         <y>50</y>
-         <width>81</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>File Format:</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_extension_1">
-       <property name="geometry">
-        <rect>
-         <x>50</x>
-         <y>90</y>
-         <width>91</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>File Extension: </string>
-       </property>
-      </widget>
-      <widget class="QComboBox" name="combo_extension_1">
-       <property name="geometry">
-        <rect>
-         <x>180</x>
-         <y>90</y>
-         <width>69</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <item>
-        <property name="text">
-         <string>Any</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>mp4</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>webm</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>3gpp</string>
-        </property>
-       </item>
-      </widget>
-      <widget class="QComboBox" name="combo_format_1">
-       <property name="geometry">
-        <rect>
-         <x>180</x>
-         <y>50</y>
-         <width>69</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <item>
-        <property name="text">
-         <string>Any</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Both</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Audio</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Video</string>
-        </property>
-       </item>
+       <zorder>frame_error</zorder>
+       <zorder>label_error</zorder>
+       <zorder>frame_errorHeading</zorder>
       </widget>
      </widget>
     </widget>
@@ -679,8 +476,8 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="page_downloadSelection">
-     <widget class="QListWidget" name="list_downloads">
+    <widget class="QWidget" name="page_streams">
+     <widget class="QListWidget" name="list_streams">
       <property name="geometry">
        <rect>
         <x>150</x>

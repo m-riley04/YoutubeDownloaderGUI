@@ -24,3 +24,19 @@ QPushButton#btn_downloads {
 QFrame#frame_navigation {
     background-color: #f02416;
 }
+
+QFrame#frame_videoHeading {
+    background-color: #dba19a;
+}
+
+QFrame#frame_video {
+    background-color: #e6d7d5;
+}
+
+QFrame#frame_errorHeading {
+    background-color: #dba19a;
+}
+
+QFrame#frame_error {
+    background-color: #e6d7d5;
+}
