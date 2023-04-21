@@ -110,6 +110,16 @@ class YoutubeDownloader:
         '''Takes an output path for the downloaded videos. Returns the output path.'''
         self._output = outputPath
         return self._output
+    
+    def get_filtered_streams(self):
+        self._streams = self._youtube.streams.filter()
+        return self._streams
+    
+    def get_stream(self, itag:int):
+        return self._streams.get_by_itag(itag)
+    
+    def download_stream(self, stream:pt.Stream, outputPath:str):
+        return stream.download(output_path=outputPath)
 
     def try_filters(self, filtersEnabled:bool, splitChannels:bool, extension:str, chosenType:bool, maxAttempts=3):
         '''Takes in a boolean for filters enabled, split channels, chosen type, and a string for the extension. Returns a Stream object.'''

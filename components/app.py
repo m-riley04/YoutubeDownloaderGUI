@@ -41,6 +41,12 @@ class App:
     def get_filesize(self):
         return self.downloader.get_filesize()
     
+    def get_streams(self, i=0):
+        return self.downloader.get_filtered_streams()
+    
+    def download_video(self, itag:int):
+        return self.downloader.download_stream(self.downloader.get_stream(itag=itag), f"{os.getcwd()}/media")
+    
     def open_folder(self, folder=""):
         '''Opens a folder at a specific path'''
         folder = fr"{folder}"

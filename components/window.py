@@ -2,6 +2,7 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtCore import QSize
 from PyQt6 import uic
 from PyQt6.QtGui import QIcon, QAction, QPixmap
+from time import sleep
 from .app import App
 
 class Window(QMainWindow):
@@ -15,6 +16,9 @@ class Window(QMainWindow):
         self._appLogo           = QPixmap("components/icons/logo.png")
         self._mediaIcon         = QIcon("components/icons/media.png")
         self._goIcon            = QIcon("components/icons/play.png")
+        
+        # Temp Variables
+        self._itags = []
         
         # Window Attributes
         self.setWindowTitle("YoutubeDownloader")
@@ -51,7 +55,7 @@ class Window(QMainWindow):
         self.image_logo.setPixmap(self._appLogo)
         
         #-- Other
-        self.entry_url.editingFinished.connect(self.typed_url)
+        #self.entry_url.editingFinished.connect(self.typed_url)
         self.list_streams.itemDoubleClicked.connect(self.click_stream)
         
     def _initialize_pages(self):
@@ -87,8 +91,6 @@ class Window(QMainWindow):
         #error.setText("There was an error when trying to retrieve the video's data. Please try again.")
         #error.exec()
         
-        
-    
     #-- Populating/Clearing
     def clear_fields(self, parent):
         '''Clears the parent's entry forms and lists'''
@@ -112,8 +114,26 @@ class Window(QMainWindow):
                 
     def populate_list(self, list, data):
         for i, value in enumerate(data):
-            list.addItem(value)
-    
+            list.addItem(str(value))
+            
+    def populate_downloads(self, list, data, i=0):
+        try:
+            for i, value in enumerate(data):
+                itemString = f"{i}) Title: {value.title} - Size: {value.filesize_mb} - Bitrate: {value.bitrate} - Extension: {value.subtype} - Resolution: {value.resolution} - Video Codec: {value.video_codec} - Audio Codec: {value.audio_codec} - iTag: {value.itag}"
+                self._itags.append(int(value.itag))
+                list.addItem(itemString)
+            return True
+        except:
+            print(f"ERROR: Streams were unable to generate. Trying again... (#{i})")
+            if i < 5:
+                self.populate_downloads(list, data, i+1)
+            else:
+                error = QMessageBox()
+                error.setWindowTitle("ERROR")
+                error.setText("Unable to generate streams. Please try again.")
+                error.exec()
+                return False
+            
     '''
     =======================
         Widget Commands
@@ -137,6 +157,7 @@ class Window(QMainWindow):
         try:
             url = self.entry_url.text()
             self.app.parse_url(url=url)
+            self.stack_subpages.setCurrentWidget(self.subpage_loading)
         except ConnectionRefusedError:
             error = QMessageBox()
             error.setWindowTitle("ERROR")
@@ -153,16 +174,29 @@ class Window(QMainWindow):
             error.setText("An unexpected error has occurred. Please try again.")
             error.exec()
         else:
-            self.populate_list(self.list_streams, [])
-            self.stack_pages.setCurrentWidget(self.page_streams)
+            try:
+                self.populate_downloads(self.list_streams, self.app.get_streams())
+            except:
+                error = QMessageBox()
+                error.setWindowTitle("ERROR")
+                error.setText("Unable to generate streams. Please try again.")
+                error.exec()
+            else:
+                self.stack_pages.setCurrentWidget(self.page_streams)
             
-            
-    
     def click_media(self):
         self.app.open_folder(folder="media")
     
     def click_stream(self):
-        pass
+        try:
+            print(self.list_streams.selectedItems()[0])
+            print(self.list_streams.indexFromItem(self.list_streams.selectedItems()[0]).row())
+            return self.app.download_video(self._itags[self.list_streams.indexFromItem(self.list_streams.selectedItems()[0]).row()])
+        except:
+            error = QMessageBox()
+            error.setWindowTitle("ERROR")
+            error.setText("The download could not be completed. Please try again.")
+            error.exec()
     
     def click_video(self):
         pass

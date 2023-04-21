@@ -352,6 +352,21 @@
        <zorder>frame_video</zorder>
        <zorder>frame_videoHeading</zorder>
       </widget>
+      <widget class="QWidget" name="subpage_loading">
+       <widget class="QLabel" name="label_error_2">
+        <property name="geometry">
+         <rect>
+          <x>160</x>
+          <y>110</y>
+          <width>531</width>
+          <height>231</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:26pt; font-weight:700;&quot;&gt;Loading downloads...&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </widget>
       <widget class="QWidget" name="subpage_error">
        <widget class="QLabel" name="label_error">
         <property name="geometry">
