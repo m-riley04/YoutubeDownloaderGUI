@@ -13,7 +13,7 @@ QPushButton:hover {
 }
 
 QPushButton:disabled {
-    background-color: #752f2a;
+    background-color: #cf1f13;
 }
 
 QPushButton#btn_downloads {

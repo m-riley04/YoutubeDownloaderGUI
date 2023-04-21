@@ -19,6 +19,7 @@ class Window(QMainWindow):
         
         # Temp Variables
         self._itags = []
+        self._selectedRow = 0
         
         # Window Attributes
         self.setWindowTitle("YoutubeDownloader")
@@ -55,8 +56,9 @@ class Window(QMainWindow):
         self.image_logo.setPixmap(self._appLogo)
         
         #-- Other
-        #self.entry_url.editingFinished.connect(self.typed_url)
-        self.list_streams.itemDoubleClicked.connect(self.click_stream)
+        self.table_streams.itemClicked.connect(self.click_stream)
+        self.table_streams.itemDoubleClicked.connect(self.click_stream)
+        self.btn_save.clicked.connect(self.click_save)
         
     def _initialize_pages(self):
         # Set First Pages
@@ -77,7 +79,10 @@ class Window(QMainWindow):
                 duration    = self.app.get_duration()
             except:
                 print(f"Error when initializing video preview (try #{i+1})")
-                self.stack_subpages.setCurrentWidget(self.subpage_error)
+                self.image_videoThumbnail.setPixmap()
+                self.label_videoTitle.setText("Title")
+                self.label_videoChannel.setText("Channel")
+                self.label_videoDuration.setText("Duration")
             else:
                 self.image_videoThumbnail.setPixmap(thumbnail)
                 self.label_videoTitle.setText(title)
@@ -116,23 +121,41 @@ class Window(QMainWindow):
         for i, value in enumerate(data):
             list.addItem(str(value))
             
-    def populate_downloads(self, list, data, i=0):
+    def populate_downloads(self, table, data, i=0):
+        # Remove all previous downloads
+        for i, tag in enumerate(self._itags):
+            table.removeRow(0)
+        self._itags = []
+        table.clearContents()
+        
+        # Load new downloads
         try:
-            for i, value in enumerate(data):
-                itemString = f"{i}) Title: {value.title} - Size: {value.filesize_mb} - Bitrate: {value.bitrate} - Extension: {value.subtype} - Resolution: {value.resolution} - Video Codec: {value.video_codec} - Audio Codec: {value.audio_codec} - iTag: {value.itag}"
-                self._itags.append(int(value.itag))
-                list.addItem(itemString)
-            return True
+            for row, value in enumerate(data):
+                format = "Any"
+                extension = value.subtype
+                bitrate = value.bitrate
+                size = value.filesize_mb
+                resolution = value.resolution
+                audioCodec = value.audio_codec
+                videoCodec = value.video_codec
+                itag = value.itag
+                videoProps = [format, extension, bitrate, size, resolution, audioCodec, videoCodec, itag]
+                
+                self._itags.append(int(itag))
+                table.insertRow(row)
+                
+                # Set each cell's value
+                for col, prop in enumerate(videoProps):
+                    table.setItem(row, col, QTableWidgetItem(str(prop)))
         except:
-            print(f"ERROR: Streams were unable to generate. Trying again... (#{i})")
-            if i < 5:
+            print(f"ERROR: Streams were unable to generate. Trying again... (#{i+1})")
+            if i < 20:
                 self.populate_downloads(list, data, i+1)
             else:
                 error = QMessageBox()
                 error.setWindowTitle("ERROR")
                 error.setText("Unable to generate streams. Please try again.")
                 error.exec()
-                return False
             
     '''
     =======================
@@ -140,16 +163,19 @@ class Window(QMainWindow):
     =======================
     '''
     #-- Buttons
+    def navigate(self, stack, page):
+        stack.setCurrentWidget(page)
+    
     def click_home(self):
         self.clear_fields(self.page_home)
-        self.stack_pages.setCurrentWidget(self.page_home)
-        self.stack_subpages.setCurrentWidget(self.subpage_logo)
+        self.navigate(self.stack_pages, self.page_home)
+        self.navigate(self.stack_subpages, self.subpage_logo)
     
     def click_history(self):
-        self.stack_pages.setCurrentWidget(self.page_history)
+        self.navigate(self.stack_pages, self.page_history)
     
     def click_settings(self):
-        pass
+        self.navigate(self.stack_pages, self.page_settings)
     
     def click_go(self):
         self.clear_fields(self.frame_video)
@@ -157,7 +183,7 @@ class Window(QMainWindow):
         try:
             url = self.entry_url.text()
             self.app.parse_url(url=url)
-            self.stack_subpages.setCurrentWidget(self.subpage_loading)
+            self.navigate(self.stack_pages, self.page_loading)
         except ConnectionRefusedError:
             error = QMessageBox()
             error.setWindowTitle("ERROR")
@@ -175,31 +201,38 @@ class Window(QMainWindow):
             error.exec()
         else:
             try:
-                self.populate_downloads(self.list_streams, self.app.get_streams())
+                self.populate_downloads(self.table_streams, self.app.get_streams())
             except:
                 error = QMessageBox()
                 error.setWindowTitle("ERROR")
                 error.setText("Unable to generate streams. Please try again.")
                 error.exec()
             else:
-                self.stack_pages.setCurrentWidget(self.page_streams)
+                self._initialize_video_preview()
+                self.navigate(self.stack_pages, self.page_streams)
             
     def click_media(self):
         self.app.open_folder(folder="media")
     
     def click_stream(self):
+        self._selectedRow = self.table_streams.currentRow()
+    
+    def click_column(self):
+        pass
+    
+    def click_save(self):
         try:
-            print(self.list_streams.selectedItems()[0])
-            print(self.list_streams.indexFromItem(self.list_streams.selectedItems()[0]).row())
-            return self.app.download_video(self._itags[self.list_streams.indexFromItem(self.list_streams.selectedItems()[0]).row()])
+            self.app.download_video(self._itags[self._selectedRow])
         except:
             error = QMessageBox()
             error.setWindowTitle("ERROR")
             error.setText("The download could not be completed. Please try again.")
             error.exec()
-    
-    def click_video(self):
-        pass
+        else:
+            message = QMessageBox()
+            message.setWindowTitle("Success!")
+            message.setText("The video has been successfully downloaded to your selected media folder!")
+            message.exec()
     
     # Text Fields
     def typed_url(self):
