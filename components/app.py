@@ -1,10 +1,13 @@
 from .helpers import open_path
 from .youtubedownloader import YoutubeDownloader
+from .videohistory import VideoHistory
+
 import os, requests
 
 class App:
     def __init__(self):
         self.downloader = YoutubeDownloader()
+        self.history = VideoHistory()
     
     def set_extension(self, extension):
         '''Sets the extension of the Youtube filter'''
@@ -44,8 +47,17 @@ class App:
     def get_streams(self, i=0):
         return self.downloader.get_filtered_streams()
     
-    def download_video(self, itag:int):
-        return self.downloader.download_stream(self.downloader.get_stream(itag=itag), f"{os.getcwd()}/media")
+    def download_video(self, itag:int, path:str=f"{os.getcwd()}/media"):
+        return self.downloader.download_stream(self.downloader.get_stream(itag=itag), path)
+    
+    def clear_history(self):
+        return self.history.clear()
+        
+    def get_history(self):
+        return self.history.get()
+    
+    def add_to_history(self, url:str):
+        return self.history.add(url)
     
     def open_folder(self, folder=""):
         '''Opens a folder at a specific path'''

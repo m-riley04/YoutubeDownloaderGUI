@@ -20,6 +20,7 @@ class Window(QMainWindow):
         # Temp Variables
         self._itags = []
         self._selectedRow = 0
+        self._urls = []
         
         # Window Attributes
         self.setWindowTitle("YoutubeDownloader")
@@ -58,7 +59,11 @@ class Window(QMainWindow):
         #-- Other
         self.table_streams.itemClicked.connect(self.click_stream)
         self.table_streams.itemDoubleClicked.connect(self.click_stream)
+        self.table_history.itemClicked.connect(self.click_historyItem)
         self.btn_save.clicked.connect(self.click_save)
+        self.btn_saveToFolder.clicked.connect(self.click_saveToFolder)
+        self.btn_clearHistory.clicked.connect(self.click_clearHistory)
+        self.btn_loadURL.clicked.connect(self.click_loadURL)
         
     def _initialize_pages(self):
         # Set First Pages
@@ -70,7 +75,7 @@ class Window(QMainWindow):
     def _initialize_video_preview(self):
         for i in range(5):
             try:
-                thumbnail   = QPixmap()
+                thumbnail   = QPixmap("")
                 thumbnail.loadFromData(self.app.get_thumbnail_url())
                 videoURL    = self.app.get_url()
                 title       = self.app.get_title()
@@ -90,11 +95,8 @@ class Window(QMainWindow):
                 self.label_videoDuration.setText(duration)
                 return
         
-        
-        #error = QMessageBox()
-        #error.setWindowTitle("ERROR")
-        #error.setText("There was an error when trying to retrieve the video's data. Please try again.")
-        #error.exec()
+    def _initialize_history(self):
+        pass
         
     #-- Populating/Clearing
     def clear_fields(self, parent):
@@ -113,7 +115,7 @@ class Window(QMainWindow):
         for widget in children:
             for child in widget:
                 try:
-                    child.setPixmap()
+                    child.setPixmap(QPixmap())
                 except:
                     pass
                 
@@ -157,6 +159,23 @@ class Window(QMainWindow):
                 error.setText("Unable to generate streams. Please try again.")
                 error.exec()
             
+    def populate_history(self, table, data):
+        # Remove all previous histories
+        for i, url in enumerate(self._urls):
+            table.removeRow(0)
+        self._urls = []
+        table.clearContents()
+            
+        # Load new histories
+        for row, value in enumerate(data):
+            self._urls.append(value.url)
+            table.insertRow(row)
+            
+            videoProps = [value.date, value.url]
+            # Set each cell's value
+            for col, prop in enumerate(videoProps):
+                table.setItem(row, col, QTableWidgetItem(prop))
+        
     '''
     =======================
         Widget Commands
@@ -172,18 +191,20 @@ class Window(QMainWindow):
         self.navigate(self.stack_subpages, self.subpage_logo)
     
     def click_history(self):
+        self.populate_history(self.table_history, self.app.get_history())
+        if self.table_history.selectedItems() == []:
+            self.btn_loadURL.setEnabled(False)
         self.navigate(self.stack_pages, self.page_history)
     
     def click_settings(self):
         self.navigate(self.stack_pages, self.page_settings)
     
-    def click_go(self):
+    def click_go(self, __i=0):
         self.clear_fields(self.frame_video)
         self.clear_images(self.frame_video)
         try:
             url = self.entry_url.text()
             self.app.parse_url(url=url)
-            self.navigate(self.stack_pages, self.page_loading)
         except ConnectionRefusedError:
             error = QMessageBox()
             error.setWindowTitle("ERROR")
@@ -195,13 +216,18 @@ class Window(QMainWindow):
             error.setText("Please enter a valid URL!")
             error.exec()
         except:
+            if __i < 5:
+                sleep(1)
+                return self.click_go(__i+1)
             error = QMessageBox()
             error.setWindowTitle("ERROR")
             error.setText("An unexpected error has occurred. Please try again.")
             error.exec()
+            
         else:
             try:
                 self.populate_downloads(self.table_streams, self.app.get_streams())
+                self.app.add_to_history(url)
             except:
                 error = QMessageBox()
                 error.setWindowTitle("ERROR")
@@ -231,8 +257,67 @@ class Window(QMainWindow):
         else:
             message = QMessageBox()
             message.setWindowTitle("Success!")
-            message.setText("The video has been successfully downloaded to your selected media folder!")
+            message.setText("The file has been successfully downloaded to your selected media folder!")
             message.exec()
+            
+    def click_saveToFolder(self):
+        try:
+            self.app.download_video(self._itags[self._selectedRow], QFileDialog.getExistingDirectory(self, "Select a folder"))
+        except:
+            error = QMessageBox()
+            error.setWindowTitle("ERROR")
+            error.setText("The download could not be completed. Please try again.")
+            error.exec()
+        else:
+            message = QMessageBox()
+            message.setWindowTitle("Success!")
+            message.setText("The file has been successfully downloaded to your selected folder!")
+            message.exec()
+    
+    def click_clearHistory(self):
+        for i, url in enumerate(self._urls):
+            self.table_history.removeRow(0)
+        self._urls = []
+        self.table_history.clearContents()
+        self.app.clear_history()
+    
+    def click_loadURL(self, __i=0):
+        try:
+            url = self._urls[self.table_history.selectedItems()[0].row()]
+            self.app.parse_url(url=url)
+        except ConnectionRefusedError:
+            error = QMessageBox()
+            error.setWindowTitle("ERROR")
+            error.setText("The URL slot cannot be empty!")
+            error.exec()
+        except ValueError:
+            error = QMessageBox()
+            error.setWindowTitle("ERROR")
+            error.setText("Please enter a valid URL!")
+            error.exec()
+        except:
+            if __i < 5:
+                sleep(1)
+                return self.click_loadURL(__i+1)
+            error = QMessageBox()
+            error.setWindowTitle("ERROR")
+            error.setText("An unexpected error has occurred. Please try again.")
+            error.exec()
+        else:
+            try:
+                self.app.add_to_history(url)
+                self.populate_downloads(self.table_streams, self.app.get_streams())
+            except:
+                error = QMessageBox()
+                error.setWindowTitle("ERROR")
+                error.setText("Unable to generate streams. Please try again.")
+                error.exec()
+            else:
+                self._initialize_video_preview()
+                self.navigate(self.stack_pages, self.page_streams)
+                
+    def click_historyItem(self):
+        self.btn_loadURL.setEnabled(True)
     
     # Text Fields
     def typed_url(self):

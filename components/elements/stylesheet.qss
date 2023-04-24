@@ -40,3 +40,19 @@ QFrame#frame_errorHeading {
 QFrame#frame_error {
     background-color: #e6d7d5;
 }
+
+QLabel#label_videoTitle {
+
+}
+
+QLabel#label_videoChannel {
+
+}
+
+QLabel#label_videoDuration {
+
+}
+
+QLabel#label_videoHeading {
+
+}

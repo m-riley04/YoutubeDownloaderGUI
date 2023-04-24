@@ -27,7 +27,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="page_home">
      <widget class="QFrame" name="frame_url">
@@ -515,22 +515,22 @@
       <property name="geometry">
        <rect>
         <x>60</x>
-        <y>30</y>
-        <width>361</width>
-        <height>101</height>
+        <y>60</y>
+        <width>431</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;Downloader Search History&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt; font-weight:700;&quot;&gt;Downloader Search History&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
-     <widget class="QTableWidget" name="tableWidget">
+     <widget class="QTableWidget" name="table_history">
       <property name="geometry">
        <rect>
         <x>60</x>
         <y>120</y>
         <width>931</width>
-        <height>591</height>
+        <height>531</height>
        </rect>
       </property>
       <column>
@@ -543,6 +543,38 @@
         <string>URL</string>
        </property>
       </column>
+     </widget>
+     <widget class="QPushButton" name="btn_clearHistory">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>410</x>
+        <y>660</y>
+        <width>111</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Clear History</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_loadURL">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>660</y>
+        <width>111</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Load URL</string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="page_loading">
@@ -759,6 +791,22 @@
        </property>
        <property name="text">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;Title&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_videoDescription">
+       <property name="geometry">
+        <rect>
+         <x>440</x>
+         <y>170</y>
+         <width>361</width>
+         <height>91</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Description&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="wordWrap">
         <bool>true</bool>
