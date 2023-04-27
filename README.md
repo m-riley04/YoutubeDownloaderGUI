@@ -1,6 +1,6 @@
 # YoutubeDownloaderGUI
 
-## This is a Youtube video/audio downloader that utilizes the PyTube package and PyQt GUI elements. There are 3 options for downloading:
+This is a Youtube video/audio downloader that utilizes the PyTube package and PyQt GUI elements. There are 3 options for downloading:
 
 * Audio and Video (max 720p)
 * Only Audio (Max bitrate)
