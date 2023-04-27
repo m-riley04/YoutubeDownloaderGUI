@@ -18,7 +18,7 @@
 
 - Maxmimum audio and video qualities require split channels. For single-channel downloads, the maximum video quality is 720p
 
-##Known Bugs/Issues
+## Known Bugs/Issues
 
 * During times of heavy traffic on the YouTube site, streams may be unable to generate. Trying again a few times usually solves the issue; however, if it persists, waiting 10 minutes or more usually satisfies the issue.
 * The “filters” panel is disabled for the time being. Functionality is to be added ASAP.
